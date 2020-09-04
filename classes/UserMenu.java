@@ -132,7 +132,7 @@ public class UserMenu implements DisplayOperations{
 	
 	}
 	public void mainMenu(){
-		System.out.println("User :"+storePass.getUserName());
+		System.out.println("\n\t\t\t\t\tUser :"+storePass.getUserName());
 		int selectIndex = 0;
 		do{
 			System.out.println("\n\t\t\t\t\t-------------------------------");
