@@ -54,16 +54,16 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	}
 	
 	public void setPasswithAccName(String fileName,int numOfAcc) throws IOException{
-		
+		Scanner scan = new Scanner(System.in);
 		int lineindex=0;
 		writeFile = new FileWriter(fileName+".txt",true);
 		
 			while(lineindex < numOfAcc){
 				currentIndex++;
 				System.out.print("\n\t\t\t\tEnter a name of site/account you want to store password for :");
-				accName = cin.nextLine();
+				accName = scan.nextLine();
 				System.out.print("\n\t\t\t\tEnter the password to store :");
-				passwords = cin.nextLine();
+				passwords = scan.nextLine();
 				String epass=this.encryption(passwords);
 				outputline = currentIndex+" "+accName.replaceAll(" ","_")+" "+epass+"\n";
 				writeFile.write(outputline);
