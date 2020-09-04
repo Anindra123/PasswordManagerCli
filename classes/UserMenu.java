@@ -8,6 +8,7 @@ public class UserMenu implements DisplayOperations{
 	private String name;
 	private String pass;
 	private StorePassAcc storePass;
+	private GeneratePass generatePass;
 	private Scanner cin;
 	private static String currentUser = null;
 	private int numOfAcc;
@@ -17,6 +18,7 @@ public class UserMenu implements DisplayOperations{
 		this.pass = null;
 		cin = new Scanner(System.in);
 		storePass = new StorePassAcc();
+		generatePass = new GeneratePass();
 	}
 	
 	public void registerMenu(){
@@ -121,6 +123,10 @@ public class UserMenu implements DisplayOperations{
 		}	
 
 	}
+	public void generatePassMenu(){
+		System.out.println("Your generated password :"+generatePass.getGeneratedPass());
+	}
+		
 	public void forgotPassMenu(){
 		System.out.print("Enter Your Name : ");
 		String name = cin.nextLine();
@@ -147,9 +153,11 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t|     4.Remove password       |");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|     5.Logout                |");
+			System.out.println("\t\t\t\t\t|  5.Suggest a strong password|");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.print("\n\t\t\t\t\tEnter any one(1-5):");
+			System.out.println("\t\t\t\t\t|     6.Logout                |");
+			System.out.println("\t\t\t\t\t-------------------------------");
+			System.out.print("\n\t\t\t\t\tEnter any one(1-6):");
 			try{
 				selectIndex = cin.nextInt();
 				cin.nextLine();
@@ -170,8 +178,10 @@ public class UserMenu implements DisplayOperations{
 			else if(selectIndex == 4){
 				this.removePassMenu();
 			}
-			
-		}while(selectIndex != 5);
+			else if(selectIndex == 5){
+				this.generatePassMenu();
+			}
+		}while(selectIndex != 6);
 	}
 		
 				
