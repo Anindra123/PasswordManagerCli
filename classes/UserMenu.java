@@ -85,7 +85,7 @@ public class UserMenu implements DisplayOperations{
 			storePass.modifyPasswords(currentUser+"Stored Passwords");
 		}
 		catch(FileNotFoundException e){
-			System.out.println("No password currently stored");
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
@@ -97,7 +97,7 @@ public class UserMenu implements DisplayOperations{
 			storePass.removePasswords(currentUser+"Stored Passwords");
 		}
 		catch(FileNotFoundException e){
-			System.out.println("No password currently stored");
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
@@ -108,7 +108,7 @@ public class UserMenu implements DisplayOperations{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.getPasswithAccName(currentUser+"Stored Passwords");
 		}catch(FileNotFoundException e){
-			System.out.println("No password currently stored");
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 
 	}
@@ -146,7 +146,7 @@ public class UserMenu implements DisplayOperations{
 				cin.nextLine();
 			}
 			catch(InputMismatchException e){
-				System.out.println("Please enter a number");
+				System.out.println("\n\t\t\t\t\tPlease enter a number");
 				cin.nextLine();
 			}
 			if(selectIndex == 1){
@@ -189,7 +189,7 @@ public class UserMenu implements DisplayOperations{
 				cin.nextLine();
 			}
 			catch(InputMismatchException e){
-				System.out.println("Please enter a number");
+				System.out.println("\n\t\t\t\t\tPlease enter a number");
 				cin.nextLine();
 				return;
 			}
