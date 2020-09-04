@@ -74,7 +74,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		System.out.println("\n\t\t\t\t\tAll Passwords encrypted and stored sucessfully");
 		
 	}		
-	public void getIndex(String fileName){
+	public void getIndex(String fileName) throws FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		try{
 			reader = new Scanner(readFile);
@@ -90,10 +90,6 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 			}
 			reader.close();
 		}
-		catch(FileNotFoundException e){
-			currentIndex = 0;
-			System.out.println("\n\t\t\t\t\tNo passwords currently stored");
-		}
 		catch(NumberFormatException e){
 			System.out.println("\n\t\t\t\t\tNot a number");
 		}
@@ -106,120 +102,107 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	
 	
 	
-	public void getPasswithAccName(String fileName){
+	public void getPasswithAccName(String fileName) throws FileNotFoundException{
 		readFile = new File(fileName+".txt");
-		try{
-			reader = new Scanner(readFile);
-			System.out.print("\n\t\t\t\t\tEnter the index no of the password to decrypt and view :");
-			char selectIndex = cin.next().charAt(0);
-			while(reader.hasNext()){
-				String line = reader.nextLine();
-				if(line.charAt(0) == selectIndex){	
-					String[] words = line.split(" ");
-					accName = words[1].replaceAll("_"," ");
-					passwords = words[2];
-					String dpass=this.decryption(passwords);
-					System.out.println("\n\t\t\t\t\tAccount for :"+accName);
-					System.out.println("\n\t\t\t\t\tPassword :"+dpass);
-					break;
-				}
+		
+		reader = new Scanner(readFile);
+		System.out.print("\n\t\t\t\t\tEnter the index no of the password to decrypt and view :");
+		char selectIndex = cin.next().charAt(0);
+		while(reader.hasNext()){
+			String line = reader.nextLine();
+			if(line.charAt(0) == selectIndex){	
+				String[] words = line.split(" ");
+				accName = words[1].replaceAll("_"," ");
+				passwords = words[2];
+				String dpass=this.decryption(passwords);
+				System.out.println("\n\t\t\t\t\tAccount for :"+accName);
+				System.out.println("\n\t\t\t\t\tPassword :"+dpass);
+				break;
 			}
-			reader.close();
 		}
-		catch(FileNotFoundException e){
-			System.out.println("\t\t\t\tFile doesn't exist");
-		}
+		reader.close();
+		
 	}
 					
-	public void modifyPasswords(String fileName) throws IOException{
+	public void modifyPasswords(String fileName) throws IOException,FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		writeFile = new FileWriter(fileName+" temp.txt");
 		System.out.print("Enter the Index no you want to modify the password for: ");
 		char selectIndex = cin.next().charAt(0);
 		cin.nextLine();
-		try{
-			reader = new Scanner(readFile);
-			while(reader.hasNext()){
-				String line = reader.nextLine();
-			    if(line.charAt(0) == selectIndex){
-					String[] words = line.split(" ");
-					String indexNo = words[0];
-					accName = words[1].replaceAll("_"," ");
-					System.out.println("For "+accName);
-					System.out.print("Enter a new password :");
-					String modPass = cin.nextLine();
-					String pass = this.encryption(modPass);
-					String outputline = indexNo+" "+accName+" "+pass+"\n";
-					writeFile.write(outputline);
-					continue;
-				}
-				writeFile.write(line+"\n");
-			}	
-			System.out.println("Password modify successfully");
+	
+		reader = new Scanner(readFile);
+		while(reader.hasNext()){
+			String line = reader.nextLine();
+			if(line.charAt(0) == selectIndex){
+				String[] words = line.split(" ");
+				String indexNo = words[0];
+				accName = words[1].replaceAll("_"," ");
+				System.out.println("For "+accName);
+				System.out.print("Enter a new password :");
+				String modPass = cin.nextLine();
+				String pass = this.encryption(modPass);
+				String outputline = indexNo+" "+accName+" "+pass+"\n";
+				writeFile.write(outputline);
+				continue;
+			}
+			writeFile.write(line+"\n");
 		}	
-		catch(FileNotFoundException e){
-			System.out.println("No Passwords currently stored for this account");
-		}
-		finally{
-			writeFile.close();
-			reader.close();
-			readFile.delete();
-			this.renameFile(fileName+" temp.txt",fileName);
+		System.out.println("Password modify successfully");
+		
+		
+		writeFile.close();
+		reader.close();
+		readFile.delete();
+		this.renameFile(fileName+" temp.txt",fileName);
             
-		}
+	
 	}
 	
 	
-	public void removePasswords(String fileName) throws IOException{
+	public void removePasswords(String fileName) throws IOException,FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		writeFile = new FileWriter(fileName+" temp.txt");
 		System.out.print("\n\t\t\t\tEnter the Index no you want to remove the password for: ");
 		char selectIndex = cin.next().charAt(0);
 		cin.nextLine();
-		try{
-			reader = new Scanner(readFile);
-			while(reader.hasNext()){
-				String line = reader.nextLine();
-			    if(line.charAt(0) == selectIndex){
-					String[] words = line.split(" ");
-					String indexNo = words[0];
-					accName = words[1].replaceAll("_"," ");
-					passwords = this.decryption(words[2]);
-					System.out.println("Account name: "+accName);
-					System.out.println("Password: "+passwords);
-					System.out.println("Do you want to permanently remove this password?");
-					System.out.println("1. Yes");
-					System.out.println("2. No");
-					System.out.println("Enter your option(1-2): ");
-					try{
-						int select = cin.nextInt();
-						cin.nextLine();
-						if(select==1){
-							continue;
-						}
-						else if(select==2){
-							writeFile.write(line+"\n");	
-						}
+		
+		reader = new Scanner(readFile);
+		while(reader.hasNext()){
+			String line = reader.nextLine();
+		    if(line.charAt(0) == selectIndex){
+				String[] words = line.split(" ");
+				String indexNo = words[0];
+				accName = words[1].replaceAll("_"," ");
+				passwords = this.decryption(words[2]);
+				System.out.println("Account name: "+accName);
+				System.out.println("Password: "+passwords);
+				System.out.println("Do you want to permanently remove this password?");
+				System.out.println("1. Yes");
+				System.out.println("2. No");
+				System.out.println("Enter your option(1-2): ");
+				try{
+					int select = cin.nextInt();
+					cin.nextLine();
+					if(select==1){
+						continue;
 					}
-					catch(InputMismatchException e){
-						System.out.println("Please enter a valid input"); 
-						writeFile.write(line+"\n");
-					}	
-			}
-			writeFile.write(line+"\n");
-			}	
-			System.out.println("\n\t\t\t\t\tPassword removed successfully");
+					else if(select==2){
+						writeFile.write(line+"\n");	
+					}
+				}
+				catch(InputMismatchException e){
+					System.out.println("Please enter a valid input"); 
+					writeFile.write(line+"\n");
+				}	
+		}
+		writeFile.write(line+"\n");
 		}	
-		catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\tNo Passwords currently stored for this account");
-		}
-		finally{
-			writeFile.close();
-			reader.close();
-			readFile.delete();
-			this.renameFile(fileName+" temp.txt",fileName);
-            
-		}
+		System.out.println("\n\t\t\t\t\tPassword removed successfully");
+		writeFile.close();
+		reader.close();
+		readFile.delete();
+		this.renameFile(fileName+" temp.txt",fileName);
 	}
 	
 	

@@ -3,6 +3,7 @@ import interfaces.DisplayOperations;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 public class UserMenu implements DisplayOperations{
 	private String name;
 	private String pass;
@@ -66,7 +67,6 @@ public class UserMenu implements DisplayOperations{
 		return false;
 	}
 	public void storePassMenu(){
-		storePass.getIndex(currentUser+"Stored Passwords");
 		System.out.print("\n\t\t\t\t\tEnter the number of accounts to store password for :");
 		try{
 			numOfAcc = cin.nextInt();
@@ -80,26 +80,37 @@ public class UserMenu implements DisplayOperations{
 		}
 	}
 	public void modifyPassMenu(){
-		storePass.getIndex(currentUser+"Stored Passwords");
 		try{
+			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.modifyPasswords(currentUser+"Stored Passwords");
+		}
+		catch(FileNotFoundException e){
+			System.out.println("Not password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
 	}
 	public void removePassMenu(){
-		storePass.getIndex(currentUser+"Stored Passwords");
 		try{
+			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.removePasswords(currentUser+"Stored Passwords");
+		}
+		catch(FileNotFoundException e){
+			System.out.println("No password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
 	}
 	public void getPassMenu(){
-		storePass.getIndex(currentUser+"Stored Passwords");
-		storePass.getPasswithAccName(currentUser+"Stored Passwords");
+		try{
+			storePass.getIndex(currentUser+"Stored Passwords");
+			storePass.getPasswithAccName(currentUser+"Stored Passwords");
+		}catch(FileNotFoundException e){
+			System.out.println("No password currently stored");
+		}
+
 	}
 	public void forgotPassMenu(){
 		System.out.print("Enter Your Name : ");
