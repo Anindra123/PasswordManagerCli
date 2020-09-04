@@ -1,7 +1,10 @@
 package classes;
 import java.util.Random;
 import java.util.Scanner;
-
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GeneratePass extends StorePassAcc{
 	private String generatedPass;
@@ -9,7 +12,6 @@ public class GeneratePass extends StorePassAcc{
 	private String[] symbols;
 	private String alphabet;
 	private Random random;
-	
 	
 	
 	public GeneratePass(){
@@ -39,5 +41,43 @@ public class GeneratePass extends StorePassAcc{
 		generatedPass = this.genRandStr()+this.genRandSym()+this.genRandNum()+this.genRandStr()+
 		this.genRandNum()+this.genRandSym()+this.genRandStr();
 		return generatedPass;
+	}
+	
+	public void getIndex(String fileName) throws FileNotFoundException{
+		readFile = new File(fileName+".txt");
+		try{
+			reader = new Scanner(readFile);
+			while(reader.hasNext()){
+				String line = reader.nextLine();
+				String[] words = line.split(" ");
+				index = words[0];
+				currentIndex = Integer.parseInt(index);
+			}
+			reader.close();
+		}
+		catch(NumberFormatException e){
+			System.out.println("\n\t\t\t\t\tNot a number");
+		}
+	}
+	
+	public void setPasswithAccName(String fileName,String accName,String pass) throws IOException{
+		currentIndex++;
+		String outputline = currentIndex+" "+accName+" "+pass;
+		writeFile = new FileWriter(fileName+".txt",true);
+		writeFile.write(outputline);
+		writeFile.close();
+		System.out.println("Password Stored sucessfully");
+	}
+	
+	public void savePasswithAccName(String fileName,String accName,String pass) throws IOException{
+		String outputline = "For "+accName+"\n"+"Generated Pass :"+pass+"\n";
+		writeFile = new FileWriter(fileName+".txt",true);
+		File filepath = new File(fileName+".txt");
+		writeFile.write(outputline);
+		writeFile.close();
+		if(filepath.exists()){
+			System.out.println("File "+filepath.getName()+" created at "+filepath.getAbsolutePath());
+			System.out.println("Please delete the file after copying the password");
+		}
 	}
 }

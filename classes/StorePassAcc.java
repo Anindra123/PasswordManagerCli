@@ -11,11 +11,11 @@ import java.util.InputMismatchException;
 
 
 public class StorePassAcc extends MasterPassAcc implements FileHandlingOperations{
-	private String passwords;
-	private String accName;
-	private String outputline;
-	private String index;
-	private static int currentIndex =0;
+	protected String passwords;
+	protected String accName;
+	protected String outputline;
+	protected String index;
+	protected static int currentIndex =0;
 	
 	
 	public StorePassAcc(){

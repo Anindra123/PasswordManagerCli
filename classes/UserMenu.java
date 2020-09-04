@@ -124,8 +124,42 @@ public class UserMenu implements DisplayOperations{
 
 	}
 	public void generatePassMenu(){
-		System.out.println("Your generated password :"+generatePass.getGeneratedPass());
-	}
+		System.out.print("Enter a title of the account you want to generate a password for :");
+		String accName = cin.nextLine();
+		String pass = generatePass.getGeneratedPass();
+		System.out.println("Your generated password :"+pass);
+		System.out.println("What do you want to do ?");
+		System.out.println("1.Store encrypted pass with account name");
+		System.out.println("2.Save decrypted pass on a seperate textfile");
+		System.out.print("Enter a option (1-2):");
+		try{
+			
+			int selectIndex = cin.nextInt();
+			cin.nextLine();
+			if(selectIndex == 1){
+				generatePass.getIndex(currentUser+"Stored Passwords");
+				String epass = storePass.encryption(pass);
+				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
+			}
+			else if(selectIndex == 2){
+				System.out.print("Enter a file name you want to store the password to :");
+				String fileName = cin.nextLine();
+				generatePass.savePasswithAccName(fileName,accName,pass);
+			}
+		}
+		catch(InputMismatchException e){
+			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+		}
+		catch(FileNotFoundException e){
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
+		}
+		catch(IOException e){
+			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
+		}
+	}		
+
+		
+	
 		
 	public void forgotPassMenu(){
 		System.out.print("Enter Your Name : ");
