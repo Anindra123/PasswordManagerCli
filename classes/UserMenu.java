@@ -90,6 +90,9 @@ public class UserMenu implements DisplayOperations{
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
+		catch(IndexNotMatchingException e){
+			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+		}
 	}
 	public void removePassMenu(){
 		try{
@@ -102,6 +105,9 @@ public class UserMenu implements DisplayOperations{
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
+		catch(IndexNotMatchingException e){
+			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+		}
 	}
 	public void getPassMenu(){
 		try{
@@ -110,6 +116,9 @@ public class UserMenu implements DisplayOperations{
 		}catch(FileNotFoundException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
+		catch(IndexNotMatchingException e){
+			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+		}	
 
 	}
 	public void forgotPassMenu(){

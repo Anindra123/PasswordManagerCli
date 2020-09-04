@@ -99,15 +99,37 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		File newFile = new File(newFileName+".txt");
 		oldFile.renameTo(newFile);	
 	}
+	public boolean checkIndex(String fileName,char index) throws FileNotFoundException{
+		readFile = new File(fileName+".txt");
+		int flag = 0;
+		reader = new Scanner(readFile);
+		while(reader.hasNext()){
+			String line = reader.nextLine();
+			if(line.charAt(0) == index){
+				flag = 1;
+				break;
+			}
+			
+		}
+		reader.close();
+		
+		if(flag == 1){
+			return true;
+		}
+		return false;
+	}
 	
 	
-	
-	public void getPasswithAccName(String fileName) throws FileNotFoundException{
+	public void getPasswithAccName(String fileName) throws FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
 		
-		reader = new Scanner(readFile);
 		System.out.print("\n\t\t\t\t\tEnter the index no of the password to decrypt and view :");
 		char selectIndex = cin.next().charAt(0);
+		if(!checkIndex(userName.replaceAll("_"," ")+"Stored Passwords",selectIndex)){
+			throw new IndexNotMatchingException(selectIndex);
+		}
+		reader = new Scanner(readFile);
+		
 		while(reader.hasNext()){
 			String line = reader.nextLine();
 			if(line.charAt(0) == selectIndex){	
@@ -123,13 +145,19 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		reader.close();
 		
 	}
-					
-	public void modifyPasswords(String fileName) throws IOException,FileNotFoundException{
+
+		
+	
+	
+	public void modifyPasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
-		writeFile = new FileWriter(fileName+" temp.txt");
 		System.out.print("Enter the Index no you want to modify the password for: ");
 		char selectIndex = cin.next().charAt(0);
 		cin.nextLine();
+		if(!checkIndex(userName.replaceAll("_"," ")+"Stored Passwords",selectIndex)){
+			throw new IndexNotMatchingException(selectIndex);
+		}
+		writeFile = new FileWriter(fileName+" temp.txt");
 	
 		reader = new Scanner(readFile);
 		while(reader.hasNext()){
@@ -160,13 +188,15 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	}
 	
 	
-	public void removePasswords(String fileName) throws IOException,FileNotFoundException{
+	public void removePasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
-		writeFile = new FileWriter(fileName+" temp.txt");
 		System.out.print("\n\t\t\t\tEnter the Index no you want to remove the password for: ");
 		char selectIndex = cin.next().charAt(0);
 		cin.nextLine();
-		
+		if(!checkIndex(userName.replaceAll("_"," ")+"Stored Passwords",selectIndex)){
+			throw new IndexNotMatchingException(selectIndex);
+		}
+		writeFile = new FileWriter(fileName+" temp.txt");
 		reader = new Scanner(readFile);
 		while(reader.hasNext()){
 			String line = reader.nextLine();
