@@ -85,7 +85,7 @@ public class UserMenu implements DisplayOperations{
 			storePass.modifyPasswords(currentUser+"Stored Passwords");
 		}
 		catch(FileNotFoundException e){
-			System.out.println("Not password currently stored");
+			System.out.println("No password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
