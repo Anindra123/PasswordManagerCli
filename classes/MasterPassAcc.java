@@ -54,8 +54,8 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 			reader = new Scanner(readFile);
 		    while(reader.hasNext()){
             String line = reader.nextLine();
-			if(line.contains(userName)){
-				String words[] = line.split(" ");
+			String words[] = line.split(" ");
+			if(words[0].equals(userName)){
 				String masterpass = words[1];
                   return masterpass;				
 				}
@@ -110,7 +110,7 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 			reader.close();
 		}
 		catch(FileNotFoundException e){
-			System.out.println("File Doesn't Exist");
+			System.out.println("Account not found or created");	
 		}
 		catch(NullPointerException e){
 			System.out.println("User Name or Password Doesn't Match.Please Try Again");

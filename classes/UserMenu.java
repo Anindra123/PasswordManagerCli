@@ -176,10 +176,15 @@ public class UserMenu implements DisplayOperations{
 	public void forgotPassMenu(){
 		System.out.print("Enter Your Name : ");
 		String name = cin.nextLine();
-		String pass = storePass.getMasterPass("Users",name.replaceAll(" ","_"));
-		String depass = storePass.decryption(pass);
-		System.out.println("For User: "+name);
-		System.out.println("Your Master Password :"+depass);
+		try{
+			String pass = storePass.getMasterPass("Users",name.replaceAll(" ","_"));
+			String depass = storePass.decryption(pass);
+			System.out.println("For User: "+name);
+			System.out.println("Your Master Password :"+depass);
+		}
+		catch(NullPointerException e){
+			System.out.println("User name doesn't match or doesn't exists.Try Again");
+		}
 		
 	
 	}

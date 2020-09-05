@@ -224,7 +224,6 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 							continue;
 						}
 						else if(select==2){
-						//writeFile.write(line+"\n");	
 						System.out.println("\n\t\t\t\t\tPassword not removed ");
 						}
 					}
