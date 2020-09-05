@@ -1,9 +1,12 @@
 package classes;
 import interfaces.DisplayOperations;
+import exceptions.IndexNotMatchingException;
+import exceptions.FileisEmptyException;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+
 public class UserMenu implements DisplayOperations{
 	private String name;
 	private String pass;
@@ -89,6 +92,9 @@ public class UserMenu implements DisplayOperations{
 		catch(FileNotFoundException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
+		catch(FileisEmptyException e){
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
+		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
@@ -102,6 +108,9 @@ public class UserMenu implements DisplayOperations{
 			storePass.removePasswords(currentUser+"Stored Passwords");
 		}
 		catch(FileNotFoundException e){
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
+		}
+		catch(FileisEmptyException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
@@ -118,6 +127,9 @@ public class UserMenu implements DisplayOperations{
 		}catch(FileNotFoundException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
+		catch(FileisEmptyException e){
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
+		}	
 		catch(IndexNotMatchingException e){
 			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
 		}	
