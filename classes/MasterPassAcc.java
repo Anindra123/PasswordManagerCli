@@ -23,10 +23,6 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 		this.masterPass = null;
 		cin = new Scanner(System.in);
 	}
-	public MasterPassAcc(String userName,String masterPass){
-		this.userName = userName;
-		this.masterPass = masterPass;
-	}
 	public void setUserName(String userName){
 		this.userName = userName;
 	}

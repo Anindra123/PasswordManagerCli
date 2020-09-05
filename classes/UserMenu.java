@@ -141,8 +141,8 @@ public class UserMenu implements DisplayOperations{
 		String pass = generatePass.getGeneratedPass();
 		System.out.println("Your generated password :"+pass);
 		System.out.println("What do you want to do ?");
-		System.out.println("1.Store encrypted pass with account name");
-		System.out.println("2.Save decrypted pass on a seperate textfile");
+		System.out.println("1.Store encrypted pass only");
+		System.out.println("2.Store encrypted pass and save the decrypted pass in seperate textfile");
 		System.out.print("Enter a option (1-2):");
 		try{
 			
@@ -154,6 +154,9 @@ public class UserMenu implements DisplayOperations{
 				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
 			}
 			else if(selectIndex == 2){
+				generatePass.getIndex(currentUser+"Stored Passwords");
+				String epass = storePass.encryption(pass);
+				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
 				System.out.print("Enter a file name you want to store the password to :");
 				String fileName = cin.nextLine();
 				generatePass.savePasswithAccName(fileName,accName,pass);
@@ -161,6 +164,7 @@ public class UserMenu implements DisplayOperations{
 		}
 		catch(InputMismatchException e){
 			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+			return;
 		}
 		catch(FileNotFoundException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");

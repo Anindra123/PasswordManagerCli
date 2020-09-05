@@ -14,6 +14,7 @@ public interface FileHandlingOperations {
 	public void removePasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException;
 	public void getIndex(String fileName) throws FileNotFoundException,FileisEmptyException;
 	public void renameFile(String oldFileName,String newFileName);
+	public boolean verify(String fileName,String user,String pass);
 	
 	
 }
