@@ -44,26 +44,13 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 		}
 		return false;
 	}
-	public String getMasterPass(String fileName,String userName){
-		File readFile = new File(fileName+".txt");
-		try{
-			reader = new Scanner(readFile);
-		    while(reader.hasNext()){
-            String line = reader.nextLine();
-			String words[] = line.split(" ");
-			if(words[0].equals(userName)){
-				String masterpass = words[1];
-                  return masterpass;				
-				}
-			}
-			reader.close();
-		}
-		catch(FileNotFoundException e){
-		System.out.println("Account not found or created");	
-		}
-		return null;
-	}
 	
+	public boolean isNull(String user,String pass){
+		if(user.length() == 0 && pass.length()==0){
+			return true;
+		}
+		return false;
+	}
 	public boolean verify(String fileName,String user,String pass){
 		String content = user+" "+pass;
 		readFile = new File(fileName+".txt");
@@ -80,6 +67,27 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 		}
 		return false;
 	}
+	public String getMasterPass(String fileName,String userName){
+		File readFile = new File(fileName+".txt");
+		try{
+			reader = new Scanner(readFile);
+		    while(reader.hasNext()){
+            String line = reader.nextLine();
+			String words[] = line.split(" ");
+			if(words[0].equals(userName)){
+				String masterpass = words[1];
+                  return masterpass;				
+				}
+			}
+			reader.close();
+		}
+		catch(FileNotFoundException e){
+		System.out.println("\n\t\t\t\tAccount not found or created");	
+		}
+		return null;
+	}
+	
+	
 	public abstract String encryption(String passwords);
 	public abstract String decryption(String passwords);
 	
@@ -106,10 +114,10 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 			reader.close();
 		}
 		catch(FileNotFoundException e){
-			System.out.println("Account not found or created");	
+			System.out.println("\n\t\t\t\tAccount not found or created");	
 		}
 		catch(NullPointerException e){
-			System.out.println("User Name or Password Doesn't Match.Please Try Again");
+			System.out.println("\n\t\t\tser Name or Password Doesn't Match.Please Try Again");
 		}
 	}
 		

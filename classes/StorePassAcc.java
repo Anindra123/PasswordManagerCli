@@ -80,15 +80,18 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		}
 		try{
 			reader = new Scanner(readFile);
-			System.out.println("Index        Account-Title");
+			System.out.println("\n\t\t\t\t\t------------------------------");
+			System.out.println("\t\t\t\t\t|Index        Account-Title  |");
+			System.out.println("\t\t\t\t\t------------------------------");
 			while(reader.hasNext()){
 				String line = reader.nextLine();
 				String[] words = line.split(" ");
 				index = words[0];
 				accName = words[1].replaceAll("_"," ");
 				passwords = words[2];
-				System.out.println(index+"            "+accName);
+				System.out.println("\t\t\t\t\t| "+index+"\t            "+accName+"       |");
 				currentIndex = Integer.parseInt(index);
+			System.out.println("\t\t\t\t\t------------------------------");
 			}
 		}
 		catch(NumberFormatException e){
@@ -126,7 +129,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	public void getPasswithAccName(String fileName) throws FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
 		
-		System.out.print("\n\t\t\t\t\tEnter the index no of the password to decrypt and view :");
+		System.out.print("\n\t\t\t\tEnter the index no of the password to decrypt and view :");
 		char selectIndex = cin.next().charAt(0);
 		if(!checkIndex(userName.replaceAll("_"," ")+"Stored Passwords",selectIndex)){
 			throw new IndexNotMatchingException(selectIndex);
@@ -155,7 +158,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	
 	public void modifyPasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
-		System.out.print("Enter the Index no you want to modify the password for: ");
+		System.out.print("\n\t\t\t\tEnter the Index no you want to modify the password for: ");
 		char selectIndex = cin.next().charAt(0);
 		cin.nextLine();
 		if(!checkIndex(userName.replaceAll("_"," ")+"Stored Passwords",selectIndex)){
@@ -170,8 +173,8 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 					String[] words = line.split(" ");
 					String indexNo = words[0];
 					accName = words[1].replaceAll("_"," ");
-					System.out.println("For "+accName);
-					System.out.print("Enter a new password :");
+					System.out.println("\n\t\t\t\t\tFor "+accName);
+					System.out.print("\n\t\t\t\t\tEnter a new password :");
 					String modPass = cin.nextLine();
 					String pass = this.encryption(modPass);
 					String outputline = indexNo+" "+accName+" "+pass+"\n";
@@ -180,7 +183,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 				}
 				writeFile.write(line+"\n");
 			}	
-			System.out.println("Password modify successfully");
+			System.out.println("\n\t\t\t\t\tPassword modify successfully");
 		}
 		finally{
 			writeFile.close();
@@ -210,12 +213,12 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 					String indexNo = words[0];
 					accName = words[1].replaceAll("_"," ");
 					passwords = this.decryption(words[2]);
-					System.out.println("Account name: "+accName);
-					System.out.println("Password: "+passwords);
-					System.out.println("Do you want to permanently remove this password?");
-					System.out.println("1. Yes");
-					System.out.println("2. No");
-					System.out.println("Enter your option(1-2): ");
+					System.out.println("\n\t\t\t\tAccount name: "+accName);
+					System.out.println("\n\t\t\t\tPassword: "+passwords);
+					System.out.println("\n\t\t\t\tDo you want to permanently remove this password?");
+					System.out.println("\n\t\t\t\t1. Yes");
+					System.out.println("\n\t\t\t\t2. No");
+					System.out.print("\n\t\t\t\tEnter your option(1-2): ");
 					try{
 						int select = cin.nextInt();
 						cin.nextLine();
@@ -228,7 +231,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 						}
 					}
 					catch(InputMismatchException e){
-						System.out.println("Please enter a valid input"); 
+						System.out.println("\n\t\t\t\tPlease enter a valid input"); 
 						writeFile.write(line+"\n");
 					}	
 			}

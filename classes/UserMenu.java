@@ -34,7 +34,7 @@ public class UserMenu implements DisplayOperations{
 		System.out.print("\n\t\t\t\t\tEnter a strong master password :");
 		pass = cin.nextLine();
 		String epass= storePass.encryption(pass);
-		if(!storePass.verify("Users",userName,epass)){
+		if(!storePass.verify("Users",userName,epass) && !storePass.isNull(name,pass)){
 			storePass.setUserName(userName);
 			storePass.setMasterPass(epass);
 			try{
@@ -45,9 +45,14 @@ public class UserMenu implements DisplayOperations{
 				System.out.println("\n\t\t\t\tError Occured.Please Try Again");
 			}
 			System.out.println("\n\t\t\t\tAccount Registered Sucessfully");
-		}else{
+		}
+		else if(storePass.isNull(name,pass)){
+			System.out.println("\n\t\t\t\tPlease enter a valid input");
+		}
+		else if(storePass.verify("Users",userName,epass)){
 			System.out.println("\n\t\t\t\tUsername or masterpassword already exist");
 		}
+			
 		
 	}
 	public boolean loginMenu(){		
@@ -64,15 +69,15 @@ public class UserMenu implements DisplayOperations{
 		storePass.getPasswithAccName("Users",content);
 		if(storePass.verify(userName,epass)){
 			currentUser = storePass.getUserName();
-			System.out.println("\t\t\t\t\tLogged in Sucessfully. Welcome,"+currentUser);
+			System.out.println("\n\t\t\t\t\tLogged in Sucessfully. Welcome,"+currentUser);
 			return true;
 		}else{
-			System.out.println("\t\t\t\tUser name or Master Password doesn't match or not saved, please try again");		
+			System.out.println("\n\t\t\t\tUser name or Master Password doesn't match or not saved, please try again");		
 		}
 		return false;
 	}
 	public void storePassMenu(){
-		System.out.print("\n\t\t\t\t\tEnter the number of accounts to store password for :");
+		System.out.print("\n\t\t\t\tEnter the number of accounts to store password for :");
 		try{
 			numOfAcc = cin.nextInt();
 			cin.nextLine();
@@ -136,14 +141,14 @@ public class UserMenu implements DisplayOperations{
 
 	}
 	public void generatePassMenu(){
-		System.out.print("Enter a title of the account you want to generate a password for :");
+		System.out.print("\n\t\t\t\tEnter a title of the account you want to generate a password for :");
 		String accName = cin.nextLine();
 		String pass = generatePass.getGeneratedPass();
-		System.out.println("Your generated password :"+pass);
-		System.out.println("What do you want to do ?");
-		System.out.println("1.Store encrypted pass only");
-		System.out.println("2.Store encrypted pass and save the decrypted pass in seperate textfile");
-		System.out.print("Enter a option (1-2):");
+		System.out.println("\n\t\t\t\tYour generated password :"+pass);
+		System.out.println("\n\t\t\t\tWhat do you want to do ?");
+		System.out.println("\n\t\t\t\t1.Store encrypted pass only");
+		System.out.println("\n\t\t\t\t2.Store encrypted pass and save the decrypted pass in seperate textfile");
+		System.out.print("\n\t\t\t\tEnter a option (1-2):");
 		try{
 			
 			int selectIndex = cin.nextInt();
@@ -157,7 +162,7 @@ public class UserMenu implements DisplayOperations{
 				generatePass.getIndex(currentUser+"Stored Passwords");
 				String epass = storePass.encryption(pass);
 				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
-				System.out.print("Enter a file name you want to store the password to :");
+				System.out.print("\n\t\t\t\tEnter a file name you want to store the password to :");
 				String fileName = cin.nextLine();
 				generatePass.savePasswithAccName(fileName,accName,pass);
 			}
@@ -178,16 +183,16 @@ public class UserMenu implements DisplayOperations{
 	
 		
 	public void forgotPassMenu(){
-		System.out.print("Enter Your Name : ");
+		System.out.print("\n\t\t\t\t\tEnter Your Name : ");
 		String name = cin.nextLine();
 		try{
 			String pass = storePass.getMasterPass("Users",name.replaceAll(" ","_"));
 			String depass = storePass.decryption(pass);
-			System.out.println("For User: "+name);
-			System.out.println("Your Master Password :"+depass);
+			System.out.println("\n\t\t\t\t\tFor User: "+name);
+			System.out.println("\n\t\t\t\t\tYour Master Password :"+depass);
 		}
 		catch(NullPointerException e){
-			System.out.println("User name doesn't match or doesn't exists.Try Again");
+			System.out.println("\n\t\t\t\t\tUser name doesn't match or doesn't exists.Try Again");
 		}
 		
 	
@@ -200,17 +205,17 @@ public class UserMenu implements DisplayOperations{
 		    System.out.println("\t\t\t\t\t|         MAIN MENU           |");
 		    System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|     1.Store passwords       |");
+			System.out.println("\t\t\t\t\t|      1.Store passwords      |");
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t|     2.Show saved passwords  |");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|     3.Modify password       |");
+			System.out.println("\t\t\t\t\t|      3.Modify password      |");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|     4.Remove password       |");
+			System.out.println("\t\t\t\t\t|      4.Remove password      |");
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t|  5.Suggest a strong password|");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|     6.Logout                |");
+			System.out.println("\t\t\t\t\t|         6.Logout            |");
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.print("\n\t\t\t\t\tEnter any one(1-6):");
 			try{

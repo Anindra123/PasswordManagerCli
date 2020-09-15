@@ -66,7 +66,7 @@ public class GeneratePass extends StorePassAcc{
 		writeFile = new FileWriter(fileName+".txt",true);
 		writeFile.write(outputline);
 		writeFile.close();
-		System.out.println("Password Stored sucessfully");
+		System.out.println("\n\t\t\t\t\tPassword Stored sucessfully");
 	}
 	
 	public void savePasswithAccName(String fileName,String accName,String pass) throws IOException{
@@ -77,7 +77,7 @@ public class GeneratePass extends StorePassAcc{
 		writeFile.close();
 		if(filepath.exists()){
 			System.out.println("File "+filepath.getName()+" created at "+filepath.getAbsolutePath());
-			System.out.println("Please delete the file after copying the password");
+			System.out.println("\n\t\t\tPlease delete the file after copying the password");
 		}
 	}
 }
