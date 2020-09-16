@@ -63,14 +63,26 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 				System.out.print("\n\t\t\t\tEnter the password to store :");
 				passwords = scan.nextLine();
 				String epass=this.encryption(passwords);
-				outputline = currentIndex+" "+accName.replaceAll(" ","_")+" "+epass+"\n";
-				writeFile.write(outputline);
-				lineindex++;
+				if(!isNull(accName,passwords) && !passwords.contains(" ")){
+					outputline = currentIndex+" "+accName.replaceAll(" ","_")+" "+epass+"\n";
+					writeFile.write(outputline);
+					lineindex++;
+				}else if(isNull(accName,passwords)){
+					System.out.println("\n\t\t\t\t\tPlease enter a valid input");
+					currentIndex = 0;
+					return;
+				}
+				else if(passwords.contains(" ")){
+					System.out.println("\n\t\t\t\t\tAvoid using spaces in password");
+					currentIndex = 0;
+					return;
+				}	
 			
 			}
-		}finally{
-			writeFile.close();
 			System.out.println("\n\t\t\t\t\tAll Passwords encrypted and stored sucessfully");
+		}
+		finally{
+			writeFile.close();
 		}
 	}		
 	public void getIndex(String fileName) throws FileNotFoundException,FileisEmptyException{
@@ -81,7 +93,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		try{
 			reader = new Scanner(readFile);
 			System.out.println("\n\t\t\t\t\t------------------------------");
-			System.out.println("\t\t\t\t\t|Index        Account-Title  |");
+			System.out.println("\t\t\t\t\t|Index   |    Account-Title  ");
 			System.out.println("\t\t\t\t\t------------------------------");
 			while(reader.hasNext()){
 				String line = reader.nextLine();
@@ -89,7 +101,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 				index = words[0];
 				accName = words[1].replaceAll("_"," ");
 				passwords = words[2];
-				System.out.println("\t\t\t\t\t| "+index+"\t            "+accName+"       |");
+				System.out.println("\t\t\t\t\t| "+index+"      |      "+accName);
 				currentIndex = Integer.parseInt(index);
 			System.out.println("\t\t\t\t\t------------------------------");
 			}
@@ -177,13 +189,21 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 					System.out.print("\n\t\t\t\t\tEnter a new password :");
 					String modPass = cin.nextLine();
 					String pass = this.encryption(modPass);
-					String outputline = indexNo+" "+accName+" "+pass+"\n";
-					writeFile.write(outputline);
-					continue;
+					if(!isNull(accName,modPass) && !modPass.contains(" ")){
+						String outputline = indexNo+" "+accName+" "+pass+"\n";
+						writeFile.write(outputline);
+						System.out.println("\n\t\t\t\t\tPassword modify successfully");
+						continue;
+					}	
+					else if(isNull(accName,modPass)){
+						System.out.println("\n\t\t\t\t\tPlease enter a valid input");
+					}
+					else if(modPass.contains(" ")){
+						System.out.println("\n\t\t\t\t\tAvoid using spaces in passwords");
+					}	
 				}
 				writeFile.write(line+"\n");
 			}	
-			System.out.println("\n\t\t\t\t\tPassword modify successfully");
 		}
 		finally{
 			writeFile.close();

@@ -46,7 +46,7 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 	}
 	
 	public boolean isNull(String user,String pass){
-		if(user.length() == 0 && pass.length()==0){
+		if(user.length() == 0 || pass.length()==0){
 			return true;
 		}
 		return false;

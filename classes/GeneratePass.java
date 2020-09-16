@@ -18,7 +18,7 @@ public class GeneratePass extends StorePassAcc{
 		super();
 		this.generatedPass = null;
 		numbers = new int[]{0,1,2,3,4,5,6,7,8,9};
-		symbols = new String[]{"!","@","#","%","^","&","*","(",")","~",";",":","'","_","+","-"};
+		symbols = new String[]{"!","@","#","%","^","&","*","(",")",";","'","_","+","-"};
 		alphabet = null;
 		random = new Random();
 	}
@@ -44,6 +44,7 @@ public class GeneratePass extends StorePassAcc{
 	}
 	
 	public void getIndex(String fileName) throws FileNotFoundException{
+		currentIndex = 0;
 		readFile = new File(fileName+".txt");
 		try{
 			reader = new Scanner(readFile);
@@ -53,6 +54,7 @@ public class GeneratePass extends StorePassAcc{
 				index = words[0];
 				currentIndex = Integer.parseInt(index);
 			}
+			
 			reader.close();
 		}
 		catch(NumberFormatException e){
@@ -62,7 +64,7 @@ public class GeneratePass extends StorePassAcc{
 	
 	public void setPasswithAccName(String fileName,String accName,String pass) throws IOException{
 		currentIndex++;
-		String outputline = currentIndex+" "+accName+" "+pass;
+		String outputline = currentIndex+" "+accName+" "+pass+"\n";
 		writeFile = new FileWriter(fileName+".txt",true);
 		writeFile.write(outputline);
 		writeFile.close();

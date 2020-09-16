@@ -34,7 +34,7 @@ public class UserMenu implements DisplayOperations{
 		System.out.print("\n\t\t\t\t\tEnter a strong master password :");
 		pass = cin.nextLine();
 		String epass= storePass.encryption(pass);
-		if(!storePass.verify("Users",userName,epass) && !storePass.isNull(name,pass)){
+		if(!storePass.verify("Users",userName,epass) && !storePass.isNull(name,pass) && !pass.contains(" ")){
 			storePass.setUserName(userName);
 			storePass.setMasterPass(epass);
 			try{
@@ -42,15 +42,18 @@ public class UserMenu implements DisplayOperations{
 				storePass.setPasswithAccName("Users");
 			}
 			catch(IOException e){
-				System.out.println("\n\t\t\t\tError Occured.Please Try Again");
+				System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 			}
-			System.out.println("\n\t\t\t\tAccount Registered Sucessfully");
+			System.out.println("\n\t\t\t\t\tAccount Registered Sucessfully");
 		}
 		else if(storePass.isNull(name,pass)){
-			System.out.println("\n\t\t\t\tPlease enter a valid input");
+			System.out.println("\n\t\t\t\t\tPlease enter a valid input");
 		}
 		else if(storePass.verify("Users",userName,epass)){
-			System.out.println("\n\t\t\t\tUsername or masterpassword already exist");
+			System.out.println("\n\t\t\t\t\tUsername or masterpassword already exist");
+		}
+		else if(pass.contains(" ")){
+			System.out.println("\n\t\t\t\t\tAvoid using spaces in passwords");
 		}
 			
 		
@@ -77,8 +80,15 @@ public class UserMenu implements DisplayOperations{
 		return false;
 	}
 	public void storePassMenu(){
-		System.out.print("\n\t\t\t\tEnter the number of accounts to store password for :");
+		
 		try{
+			try{
+				storePass.getIndex(currentUser+"Stored Passwords");
+			}
+			catch(FileNotFoundException | FileisEmptyException e){
+			System.out.println("\n\t\t\t\t\tNo password currently stored");
+			}
+			System.out.print("\n\t\t\t\tEnter the number of accounts to store password for :");
 			numOfAcc = cin.nextInt();
 			cin.nextLine();
 			storePass.setPasswithAccName(currentUser+"Stored Passwords",numOfAcc);
@@ -88,16 +98,15 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\n\t\t\t\t\tPlease Enter a number");
 			return;
 		}
+		
+			
 	}
 	public void modifyPassMenu(){
 		try{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.modifyPasswords(currentUser+"Stored Passwords");
 		}
-		catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\t\tNo password currently stored");
-		}
-		catch(FileisEmptyException e){
+		catch(FileNotFoundException  | FileisEmptyException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
@@ -112,10 +121,7 @@ public class UserMenu implements DisplayOperations{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.removePasswords(currentUser+"Stored Passwords");
 		}
-		catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\t\tNo password currently stored");
-		}
-		catch(FileisEmptyException e){
+		catch(FileNotFoundException  | FileisEmptyException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
@@ -129,10 +135,8 @@ public class UserMenu implements DisplayOperations{
 		try{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.getPasswithAccName(currentUser+"Stored Passwords");
-		}catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
-		catch(FileisEmptyException e){
+		catch(FileNotFoundException  | FileisEmptyException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}	
 		catch(IndexNotMatchingException e){
@@ -154,12 +158,22 @@ public class UserMenu implements DisplayOperations{
 			int selectIndex = cin.nextInt();
 			cin.nextLine();
 			if(selectIndex == 1){
-				generatePass.getIndex(currentUser+"Stored Passwords");
+				try{
+					generatePass.getIndex(currentUser+"Stored Passwords");
+				}
+				catch(FileNotFoundException e){
+					storePass.currentIndex =0;
+				}
 				String epass = storePass.encryption(pass);
 				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
 			}
 			else if(selectIndex == 2){
-				generatePass.getIndex(currentUser+"Stored Passwords");
+				try{
+					generatePass.getIndex(currentUser+"Stored Passwords");
+				}
+				catch(FileNotFoundException e){
+					storePass.currentIndex =0;
+				}
 				String epass = storePass.encryption(pass);
 				generatePass.setPasswithAccName(currentUser+"Stored Passwords",accName.replaceAll(" ","_"),epass);
 				System.out.print("\n\t\t\t\tEnter a file name you want to store the password to :");
@@ -171,9 +185,7 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
 			return;
 		}
-		catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\t\tNo password currently stored");
-		}
+		
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
@@ -213,7 +225,7 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t|      4.Remove password      |");
 			System.out.println("\t\t\t\t\t-------------------------------");
-			System.out.println("\t\t\t\t\t|  5.Suggest a strong password|");
+			System.out.println("\t\t\t\t\t| 5.Suggest a strong password |");
 			System.out.println("\t\t\t\t\t-------------------------------");
 			System.out.println("\t\t\t\t\t|         6.Logout            |");
 			System.out.println("\t\t\t\t\t-------------------------------");
@@ -225,6 +237,7 @@ public class UserMenu implements DisplayOperations{
 			catch(InputMismatchException e){
 				System.out.println("\n\t\t\t\t\tPlease enter a number");
 				cin.nextLine();
+				return;
 			}
 			if(selectIndex == 1){
 				this.storePassMenu();
