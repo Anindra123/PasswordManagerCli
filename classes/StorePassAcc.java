@@ -64,7 +64,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 			reader = new Scanner(readFile);
 			while(reader.hasNext()){
 				String line = reader.nextLine();
-				if(line.contains(accName)){
+				if(line.contains(accName.replaceAll(" ","_"))){
 					return true;
 				}
 			}
@@ -75,6 +75,9 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		catch(NoSuchElementException e){
 			System.out.println(e.getMessage());
 			return false;
+		}
+		finally{
+			reader.close();
 		}
 		return false;
 	}

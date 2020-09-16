@@ -185,7 +185,6 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
 			return;
 		}
-		
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}

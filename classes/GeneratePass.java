@@ -1,6 +1,8 @@
 package classes;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.NoSuchElementException;
+import java.util.InputMismatchException;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.FileWriter;
@@ -43,6 +45,7 @@ public class GeneratePass extends StorePassAcc{
 		return generatedPass;
 	}
 	
+	
 	public void getIndex(String fileName) throws FileNotFoundException{
 		currentIndex = 0;
 		readFile = new File(fileName+".txt");
@@ -62,13 +65,83 @@ public class GeneratePass extends StorePassAcc{
 		}
 	}
 	
+	public void replacePass(String fileName,String accName,String pass) throws IOException{
+		File readfile = new File(fileName+".txt");
+		FileWriter writeFiletemp = new FileWriter(fileName+"temp.txt",true);
+		try{
+			reader = new Scanner(readfile);
+			while(reader.hasNext()){
+				String line = reader.nextLine();
+				String[] words = line.split(" ");
+				if(line.contains(accName.replaceAll(" ","_"))){
+					String reOutputline = words[0]+" "+words[1]+" "+pass+"\n";
+					writeFiletemp.write(reOutputline);
+					continue;
+				}
+				writeFiletemp.write(line+"\n");		
+			}
+			System.out.println("\n\t\t\t\t\tPassword replaced sucessfully");
+		}
+		catch(FileNotFoundException | NoSuchElementException e){
+			System.out.println(e.getMessage());
+		}
+		finally{
+			reader.close();
+			writeFiletemp.close();
+			readFile.delete();
+			renameFile(fileName+"temp.txt",fileName);
+		}
+	}
+					
+					
+					
+	
 	public void setPasswithAccName(String fileName,String accName,String pass) throws IOException{
+		Scanner scan = new Scanner(System.in);
 		currentIndex++;
-		String outputline = currentIndex+" "+accName+" "+pass+"\n";
-		writeFile = new FileWriter(fileName+".txt",true);
-		writeFile.write(outputline);
-		writeFile.close();
-		System.out.println("\n\t\t\t\t\tPassword Stored sucessfully");
+		if(accNameExist(fileName,accName)){
+			System.out.println("\n\t\t\t\t\tPassword for account "+accName+" already stored");
+			System.out.println("\n\t\t\t\t\tDo you want to replace it ?");
+			System.out.println("\n\t\t\t\t\t1.Yes");
+			System.out.println("\n\t\t\t\t\t2.No");
+			System.out.print("\n\t\t\t\t\tEnter any one(1/2):");
+			try{
+				int select = scan.nextInt();
+				scan.nextLine();
+				if(select == 1){
+					try{
+						this.replacePass(fileName,accName,pass);
+					}
+					catch(IOException e){
+						System.out.println(e.getMessage());
+					}
+				}else if(select == 2){
+					writeFile = new FileWriter(fileName+".txt",true);
+					System.out.print("\n\t\t\t\t\tEnter a different account name:");
+					String name = scan.nextLine();
+					while(accNameExist(fileName,name)){
+						System.out.println("\n\t\t\t\t\tAccount name already exist");
+						System.out.print("\n\t\t\t\t\tEnter a different account name:");
+						name = scan.nextLine();
+					}
+					String reOutputline = currentIndex+" "+name.replaceAll(" ","_")+" "+pass+"\n";
+					writeFile.write(reOutputline);
+					writeFile.close();
+					System.out.println("\n\t\t\t\t\tPassword Stored sucessfully");
+				}
+						
+			}catch(InputMismatchException e){
+					System.out.print("\n\t\t\t\t\tPlease enter a number");
+			}	
+			
+		}
+		else{
+			writeFile = new FileWriter(fileName+".txt",true);
+			String outputline = currentIndex+" "+accName.replaceAll(" ","_")+" "+pass+"\n";
+			writeFile.write(outputline);
+			writeFile.close();
+			System.out.println("\n\t\t\t\t\tPassword Stored sucessfully");
+		}
 	}
 	
 	public void savePasswithAccName(String fileName,String accName,String pass) throws IOException{
