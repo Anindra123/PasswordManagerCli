@@ -93,7 +93,7 @@ public class UserMenu implements DisplayOperations{
 			cin.nextLine();
 			storePass.setPasswithAccName(currentUser+"Stored Passwords",numOfAcc);
 		}catch(IOException e){
-			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
+			System.out.println(e.getMessage());
 		}catch(InputMismatchException e){
 			System.out.println("\n\t\t\t\t\tPlease Enter a number");
 			return;

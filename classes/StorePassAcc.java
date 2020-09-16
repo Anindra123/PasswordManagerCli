@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 
 
 
@@ -18,6 +19,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	protected String outputline;
 	protected String index;
 	protected static int currentIndex =0;
+	protected static String tempAccName ="";
 	
 	
 	public StorePassAcc(){
@@ -50,6 +52,33 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		}	
 		return decryptedPass.toString();
 	}
+	public void renameFile(String oldFileName,String newFileName){
+		File oldFile = new File(oldFileName); 
+		File newFile = new File(newFileName+".txt");
+		oldFile.renameTo(newFile);	
+	}
+	
+	public boolean accNameExist(String fileName,String accName) {
+		readFile = new File(fileName+".txt");
+		try{
+			reader = new Scanner(readFile);
+			while(reader.hasNext()){
+				String line = reader.nextLine();
+				if(line.contains(accName)){
+					return true;
+				}
+			}
+		}
+		catch(FileNotFoundException e){
+			return false;
+		}
+		catch(NoSuchElementException e){
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return false;
+	}
+		
 	
 	public void setPasswithAccName(String fileName,int numOfAcc) throws IOException{
 		Scanner scan = new Scanner(System.in);
@@ -60,10 +89,23 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 				currentIndex++;
 				System.out.print("\n\t\t\t\tEnter a name of site/account you want to store password for :");
 				accName = scan.nextLine();
+				if(tempAccName.length() == 0){
+					tempAccName = accName;
+				}
+				else{
+					while(tempAccName.equals(accName)){
+						System.out.println("\n\t\t\t\tAccount with "+accName+" already exists");
+						System.out.print("\n\t\t\t\tPlease enter  a different account name :");
+						accName = scan.nextLine();
+					}
+					tempAccName = accName;
+				}
 				System.out.print("\n\t\t\t\tEnter the password to store :");
 				passwords = scan.nextLine();
-				String epass=this.encryption(passwords);
-				if(!isNull(accName,passwords) && !passwords.contains(" ")){
+						
+				
+				if(!isNull(accName,passwords) && !passwords.contains(" ") ){
+					String epass=this.encryption(passwords);
 					outputline = currentIndex+" "+accName.replaceAll(" ","_")+" "+epass+"\n";
 					writeFile.write(outputline);
 					lineindex++;
@@ -77,7 +119,6 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 					currentIndex = 0;
 					return;
 				}	
-			
 			}
 			System.out.println("\n\t\t\t\t\tAll Passwords encrypted and stored sucessfully");
 		}
@@ -112,11 +153,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 			reader.close();
 		}
 	}
-	public void renameFile(String oldFileName,String newFileName){
-		File oldFile = new File(oldFileName); 
-		File newFile = new File(newFileName+".txt");
-		oldFile.renameTo(newFile);	
-	}
+	
 	public boolean checkIndex(String fileName,char index) throws FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		int flag = 0;
