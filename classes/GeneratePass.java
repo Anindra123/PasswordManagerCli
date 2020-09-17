@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+//This class inherits StorePassAcc
 public class GeneratePass extends StorePassAcc{
 	private String generatedPass;
 	private int[] numbers;
@@ -25,6 +26,7 @@ public class GeneratePass extends StorePassAcc{
 		random = new Random();
 	}
 	
+	//This function returns a random string containing two characters
 	public String genRandStr(){
 		alphabet = "AbCdeFgHiJkLMnOPqRsTUvWxYz";
 		char char1 = alphabet.charAt(random.nextInt(alphabet.length()));
@@ -32,20 +34,23 @@ public class GeneratePass extends StorePassAcc{
 		String randStr = Character.toString(char1)+Character.toString(char2);
 		return randStr;
 	}
+	//This function will return a random symbol from the symbols array
 	public String genRandSym(){
 		return symbols[random.nextInt(symbols.length)];
 	}
+	//This function will return a random number from the numbers array
 	public int genRandNum(){
 		return numbers[random.nextInt(numbers.length)];
 	}
 	
+	//This function will return a generated pseudo random password that the user can save
 	public String getGeneratedPass(){
 		generatedPass = this.genRandStr()+this.genRandSym()+this.genRandNum()+this.genRandStr()+
 		this.genRandNum()+this.genRandSym()+this.genRandStr();
 		return generatedPass;
 	}
 	
-	
+	//Gets the current index for storing password.Overloaded from StorePassAcc
 	public void getIndex(String fileName) throws FileNotFoundException{
 		currentIndex = 0;
 		readFile = new File(fileName+".txt");
@@ -65,6 +70,7 @@ public class GeneratePass extends StorePassAcc{
 		}
 	}
 	
+	//Replace the pass with the generated pass if same account name is found
 	public void replacePass(String fileName,String accName,String pass) throws IOException{
 		File readfile = new File(fileName+".txt");
 		FileWriter writeFiletemp = new FileWriter(fileName+"temp.txt",true);
@@ -95,7 +101,7 @@ public class GeneratePass extends StorePassAcc{
 					
 					
 					
-	
+	//Store all passwords and account name in a file.Overloaded from StorePassAcc
 	public void setPasswithAccName(String fileName,String accName,String pass) throws IOException{
 		Scanner scan = new Scanner(System.in);
 		currentIndex++;
@@ -144,6 +150,7 @@ public class GeneratePass extends StorePassAcc{
 		}
 	}
 	
+	//Save the decrypted pass in a seperate file so the user can copy and use it
 	public void savePasswithAccName(String fileName,String accName,String pass) throws IOException{
 		String outputline = "For "+accName+"\n"+"Generated Pass :"+pass+"\n";
 		writeFile = new FileWriter(fileName+".txt",true);

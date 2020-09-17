@@ -7,6 +7,7 @@ import java.util.InputMismatchException;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+//This class handles all the display.It implements the interface DisplayOperations
 public class UserMenu implements DisplayOperations{
 	private String name;
 	private String pass;
@@ -24,6 +25,7 @@ public class UserMenu implements DisplayOperations{
 		generatePass = new GeneratePass();
 	}
 	
+	//Display Menu for registration
 	public void registerMenu(){
 		System.out.println("\n\t\t\t\t\t-------------------------------");
 		System.out.println("\t\t\t\t\t|       ACCOUNT REGISTER      |");
@@ -58,6 +60,8 @@ public class UserMenu implements DisplayOperations{
 			
 		
 	}
+	
+	//Display menu for login
 	public boolean loginMenu(){		
 	    System.out.println("\n\t\t\t\t\t-------------------------------");
 		System.out.println("\t\t\t\t\t|         LOGIN MENU          |");
@@ -79,6 +83,8 @@ public class UserMenu implements DisplayOperations{
 		}
 		return false;
 	}
+	
+	//Display menu for storing passwords
 	public void storePassMenu(){
 		
 		try{
@@ -86,6 +92,7 @@ public class UserMenu implements DisplayOperations{
 				storePass.getIndex(currentUser+"Stored Passwords");
 			}
 			catch(FileNotFoundException | FileisEmptyException e){
+			StorePassAcc.currentIndex = 0;
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 			}
 			System.out.print("\n\t\t\t\tEnter the number of accounts to store password for :");
@@ -101,6 +108,8 @@ public class UserMenu implements DisplayOperations{
 		
 			
 	}
+	
+	//Display menu for modifying passwords
 	public void modifyPassMenu(){
 		try{
 			storePass.getIndex(currentUser+"Stored Passwords");
@@ -113,37 +122,42 @@ public class UserMenu implements DisplayOperations{
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
 		catch(IndexNotMatchingException e){
-			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+			System.out.println(e.getMessage());			
 		}
 	}
+	
+	//Display menu for removing passwords
 	public void removePassMenu(){
 		try{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.removePasswords(currentUser+"Stored Passwords");
 		}
-		catch(FileNotFoundException  | FileisEmptyException e){
+		catch(FileNotFoundException | FileisEmptyException e){
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}
 		catch(IOException e){
 			System.out.println("\n\t\t\t\t\tError Occured.Please Try Again");
 		}
 		catch(IndexNotMatchingException e){
-			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+			System.out.println(e.getMessage());
 		}
 	}
+	//Menu for showing all passwords stored for a user
 	public void getPassMenu(){
 		try{
 			storePass.getIndex(currentUser+"Stored Passwords");
 			storePass.getPasswithAccName(currentUser+"Stored Passwords");
 		}
-		catch(FileNotFoundException  | FileisEmptyException e){
+		catch(FileNotFoundException | FileisEmptyException e){
+			StorePassAcc.currentIndex = 0;
 			System.out.println("\n\t\t\t\t\tNo password currently stored");
 		}	
 		catch(IndexNotMatchingException e){
-			System.out.println("\n\t\t\t\t\tPlease Enter a valid input");
+			System.out.println(e.getMessage());
 		}	
 
 	}
+	//Display menu for generating a password
 	public void generatePassMenu(){
 		System.out.print("\n\t\t\t\tEnter a title of the account you want to generate a password for :");
 		String accName = cin.nextLine();
@@ -192,7 +206,7 @@ public class UserMenu implements DisplayOperations{
 
 		
 	
-		
+	//Menu for showing master password of the user	
 	public void forgotPassMenu(){
 		System.out.print("\n\t\t\t\t\tEnter Your Name : ");
 		String name = cin.nextLine();
@@ -208,6 +222,7 @@ public class UserMenu implements DisplayOperations{
 		
 	
 	}
+	//Main menu, the menu shown after a user sucessfully logs in
 	public void mainMenu(){
 		System.out.println("\n\t\t\t\t\tUser :"+storePass.getUserName());
 		int selectIndex = 0;
@@ -257,7 +272,7 @@ public class UserMenu implements DisplayOperations{
 	}
 		
 				
-	
+	//Starting menu where user can register and login
 	public void startingMenu(){
 		int selectIndex = 0;
 		do{	System.out.println("\n\t\t\t\t\t-------------------------------");

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 
-
+//Interface containing all functionality required for file handling.Implmented by StorPassAcc and MasterPassAcc
 public interface FileHandlingOperations {
 	
 	public void setPasswithAccName(String fileName) throws IOException;

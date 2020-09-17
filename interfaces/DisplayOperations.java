@@ -1,5 +1,6 @@
 package interfaces;
 
+//Interface containing all display functionality implemented by UserMenu
 public interface DisplayOperations{
 	public void registerMenu();
 	public boolean loginMenu();

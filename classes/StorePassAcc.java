@@ -12,7 +12,7 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
 
-
+//This class inherits abstract class MasterPassAcc and implements interface FileHandlingOperations
 public class StorePassAcc extends MasterPassAcc implements FileHandlingOperations{
 	protected String passwords;
 	protected String accName;
@@ -30,6 +30,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		this.index = null;
 	}
 	
+	//Implemented from MasterPassAcc,uses Ceaser Cipher for encryption.
 	public String encryption(String passwords)
 	{
 		StringBuilder encryptedPass = new StringBuilder();
@@ -41,6 +42,8 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		}
  	return encryptedPass.toString();
 	}
+	
+	//Implemented from MasterPassAcc,uses Ceaser Cipher for decryption.
 	public String decryption(String passwords)
 	{
 		StringBuilder decryptedPass = new StringBuilder();
@@ -52,12 +55,14 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		}	
 		return decryptedPass.toString();
 	}
+	
+	//For renaming files between two files.
 	public void renameFile(String oldFileName,String newFileName){
 		File oldFile = new File(oldFileName); 
 		File newFile = new File(newFileName+".txt");
 		oldFile.renameTo(newFile);	
 	}
-	
+	//Check if user used same name/title for an account to store a password
 	public boolean accNameExist(String fileName,String accName) {
 		readFile = new File(fileName+".txt");
 		try{
@@ -82,7 +87,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		return false;
 	}
 		
-	
+	//Store password in a file for various accounts,overloaded from MasterPassAcc
 	public void setPasswithAccName(String fileName,int numOfAcc) throws IOException{
 		Scanner scan = new Scanner(System.in);
 		int lineindex=0;
@@ -128,7 +133,9 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		finally{
 			writeFile.close();
 		}
-	}		
+	}
+
+	//Gets the current index no. stored and shows the index no and account title
 	public void getIndex(String fileName) throws FileNotFoundException,FileisEmptyException{
 		readFile = new File(fileName+".txt");
 		if(readFile.length() == 0){
@@ -157,6 +164,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		}
 	}
 	
+	//This function checks if the index given by user exist
 	public boolean checkIndex(String fileName,char index) throws FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		int flag = 0;
@@ -170,14 +178,13 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 			
 		}
 		reader.close();
-		
 		if(flag == 1){
 			return true;
 		}
 		return false;
 	}
 	
-	
+	//Display the account name and decrypted pass,overloaded from MasterPassAcc 
 	public void getPasswithAccName(String fileName) throws FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
 		
@@ -207,7 +214,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 
 		
 	
-	
+	//Modify the password for any account
 	public void modifyPasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
 		System.out.print("\n\t\t\t\tEnter the Index no you want to modify the password for: ");
@@ -254,7 +261,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 	
 	}
 	
-	
+	//Remove password for an account of a given index
 	public void removePasswords(String fileName) throws IOException,FileNotFoundException,IndexNotMatchingException{
 		readFile = new File(fileName+".txt");
 		System.out.print("\n\t\t\t\tEnter the Index no you want to remove the password for: ");
