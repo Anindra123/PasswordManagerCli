@@ -73,7 +73,13 @@ public class UserMenu implements DisplayOperations{
 		pass = cin.nextLine();
 		String epass=storePass.encryption(pass);
 		String content = userName+" "+epass;
-		storePass.getPasswithAccName("Users",content);
+		try{
+			storePass.getPasswithAccName("Users",content);
+		}
+		catch(FileNotFoundException e){
+			System.out.println("\n\t\t\t\t\tAccount not found or created");
+			return false;
+		}	
 		if(storePass.verify(userName,epass)){
 			currentUser = storePass.getUserName();
 			System.out.println("\n\t\t\t\t\tLogged in Sucessfully. Welcome,"+currentUser);
@@ -93,7 +99,7 @@ public class UserMenu implements DisplayOperations{
 			}
 			catch(FileNotFoundException | FileisEmptyException e){
 			StorePassAcc.currentIndex = 0;
-			System.out.println("\n\t\t\t\t\tNo password currently stored");
+			System.out.println(e.getMessage());
 			}
 			System.out.print("\n\t\t\t\tEnter the number of accounts to store password for :");
 			numOfAcc = cin.nextInt();

@@ -15,6 +15,7 @@ public interface FileHandlingOperations {
 	public void getIndex(String fileName) throws FileNotFoundException,FileisEmptyException;
 	public void renameFile(String oldFileName,String newFileName);
 	public boolean verify(String fileName,String user,String pass);
+	public String getMasterPass(String fileName,String userName);
 	
 	
 }

@@ -70,10 +70,9 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 					return true;
 				}
 			}
+		reader.close();
 		}catch(FileNotFoundException e){
 			return false;
-		}finally{
-			reader.close();
 		}
 		return false;
 	}
@@ -91,13 +90,11 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
                   return masterpass;				
 				}
 			}
+		reader.close();
 		}
 		catch(FileNotFoundException e){
 		System.out.println("\n\t\t\t\tAccount not found or created");	
-		}
-		finally{
-			reader.close();
-		}			
+		}		
 		return null;
 	}
 	
@@ -114,7 +111,7 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 	}
 	
 	//This stores the value of user name and master pass from the file to userName and masterPass variable
-	public void getPasswithAccName(String fileName,String content){
+	public void getPasswithAccName(String fileName,String content) throws FileNotFoundException{
 		readFile = new File(fileName+".txt");
 		try{
 			reader = new Scanner(readFile);
@@ -127,16 +124,11 @@ public abstract class MasterPassAcc implements FileHandlingOperations{
 					masterPass = words[1];
 				}
 			}
-		}
-		catch(FileNotFoundException e){
-			System.out.println("\n\t\t\t\tAccount not found or created");	
+		reader.close();
 		}
 		catch(NullPointerException e){
-			System.out.println("\n\t\t\tser Name or Password Doesn't Match.Please Try Again");
+			System.out.println("\n\t\t\tUser Name or Password Doesn't Match.Please Try Again");
 		}
-		finally{
-			reader.close();
-		}	
 	}
 		
 	
