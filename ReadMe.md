@@ -13,4 +13,4 @@ Because in our current day and age most people use websites for a lot of things 
 - Exception Handling in Java
 - File I/O
 - Encryption and Decryption using Ceaser Cipher
-- Passowrd generation using Random Library of Java
+- Built in Password generator using Random Library of Java
