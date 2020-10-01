@@ -30,7 +30,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
 		this.index = null;
 	}
 	
-	//Implemented from MasterPassAcc,uses Ceaser Cipher for encryption.
+	//Implemented from MasterPassAcc,we used Ceaser Cipher for encryption.
 	public String encryption(String passwords)
 	{
 		StringBuilder encryptedPass = new StringBuilder();
@@ -43,7 +43,7 @@ public class StorePassAcc extends MasterPassAcc implements FileHandlingOperation
  	return encryptedPass.toString();
 	}
 	
-	//Implemented from MasterPassAcc,uses Ceaser Cipher for decryption.
+	//Implemented from MasterPassAcc,we used Ceaser Cipher for decryption.
 	public String decryption(String passwords)
 	{
 		StringBuilder decryptedPass = new StringBuilder();
